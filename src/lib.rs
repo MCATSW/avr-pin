@@ -5,7 +5,7 @@ use core::panic;
 pub mod addresses;
 
 /// A structure containing I/O register
-/// pointers and a mask for a given Pin.
+/// pointers and a mask for a given `Pin`.
 #[repr(packed)]
 pub struct Pin {
     pub ddr: *mut u8,
@@ -22,7 +22,7 @@ pub enum DD {
 }
 
 impl Pin {
-    /// Creates a Pin based on an Arduino pin ID.
+    /// Creates a `Pin` based on an Arduino pin ID.
     ///
     /// # Panics
     ///
@@ -53,7 +53,7 @@ impl Pin {
             panic!();
         }
     }
-    /// Sets the Pin's DDR value
+    /// Sets the `Pin`'s DDR value
     ///
     /// # Safety
     ///
@@ -67,7 +67,7 @@ impl Pin {
             DD::Output => self.ddr.read_volatile() | self.mask,
         });
     }
-    /// Modifies the pin's PORT value
+    /// Modifies the `Pin`'s PORT value
     ///
     /// When the output mode is set, this sets the pin state.
     /// When the input mode is set, this enables/disables the pullup resistor.
@@ -84,7 +84,7 @@ impl Pin {
             false => self.port.read_volatile() & !self.mask,
         });
     }
-    /// Fetches the pin's PIN value
+    /// Fetches the `Pin`'s PIN value
     ///
     /// Considering the input mode is set, this returns the pin state.
     ///
@@ -97,7 +97,7 @@ impl Pin {
     pub unsafe fn read(&self) -> bool {
         (self.pin.read_volatile() & self.mask) > 0
     }
-    /// Sets the pin to input mode with the internal pullup resistor disabled.
+    /// Sets the `Pin` to input mode with the internal pullup resistor disabled.
     ///
     /// # Safety
     ///
@@ -109,7 +109,7 @@ impl Pin {
         self.set_ddr(DD::Input);
         self.write(false);
     }
-    /// Sets the pin to input mode with the internal pullup resistor enabled.
+    /// Sets the `Pin` to input mode with the internal pullup resistor enabled.
     ///
     /// # Safety
     ///
@@ -121,7 +121,7 @@ impl Pin {
         self.set_ddr(DD::Input);
         self.write(true);
     }
-    /// Sets the pin to output mode
+    /// Sets the `Pin` to output mode
     ///
     /// # Safety
     ///
