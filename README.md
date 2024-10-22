@@ -1,6 +1,6 @@
 # avr-template
 
-A basic independent template for AVR rust.
+A basic AVR rust pin implementation.
 
 **Currently only supports the ATMega328P.**
 
