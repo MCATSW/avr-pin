@@ -54,6 +54,13 @@ impl Pin {
         }
     }
     /// Sets the Pin's DDR value
+    ///
+    /// # Safety
+    ///
+    /// Since the `Pin` struct can be constructed by the user,
+    /// there is no guarantee that the I/O register addresses
+    /// are valid. Please ensure validity of self, ideally by
+    /// avoiding manual generation of `Pin`.
     pub unsafe fn set_ddr(&self, dd: DD) {
         self.ddr.write_volatile(match dd {
             DD::Input => self.ddr.read_volatile() & !self.mask,
@@ -64,6 +71,13 @@ impl Pin {
     ///
     /// When the output mode is set, this sets the pin state.
     /// When the input mode is set, this enables/disables the pullup resistor.
+    ///
+    /// # Safety
+    ///
+    /// Since the `Pin` struct can be constructed by the user,
+    /// there is no guarantee that the I/O register addresses
+    /// are valid. Please ensure validity of self, ideally by
+    /// avoiding manual generation of `Pin`.
     pub unsafe fn write(&self, state: bool) {
         self.port.write_volatile(match state {
             true => self.port.read_volatile() | self.mask,
@@ -73,20 +87,48 @@ impl Pin {
     /// Fetches the pin's PIN value
     ///
     /// Considering the input mode is set, this returns the pin state.
+    ///
+    /// # Safety
+    ///
+    /// Since the `Pin` struct can be constructed by the user,
+    /// there is no guarantee that the I/O register addresses
+    /// are valid. Please ensure validity of self, ideally by
+    /// avoiding manual generation of `Pin`.
     pub unsafe fn read(&self) -> bool {
         (self.pin.read_volatile() & self.mask) > 0
     }
     /// Sets the pin to input mode with the internal pullup resistor disabled.
+    ///
+    /// # Safety
+    ///
+    /// Since the `Pin` struct can be constructed by the user,
+    /// there is no guarantee that the I/O register addresses
+    /// are valid. Please ensure validity of self, ideally by
+    /// avoiding manual generation of `Pin`.
     pub unsafe fn set_input(&self) {
         self.set_ddr(DD::Input);
         self.write(false);
     }
     /// Sets the pin to input mode with the internal pullup resistor enabled.
+    ///
+    /// # Safety
+    ///
+    /// Since the `Pin` struct can be constructed by the user,
+    /// there is no guarantee that the I/O register addresses
+    /// are valid. Please ensure validity of self, ideally by
+    /// avoiding manual generation of `Pin`.
     pub unsafe fn set_input_pullup(&self) {
         self.set_ddr(DD::Input);
         self.write(true);
     }
     /// Sets the pin to output mode
+    ///
+    /// # Safety
+    ///
+    /// Since the `Pin` struct can be constructed by the user,
+    /// there is no guarantee that the I/O register addresses
+    /// are valid. Please ensure validity of self, ideally by
+    /// avoiding manual generation of `Pin`.
     pub unsafe fn set_output(&self) {
         self.set_ddr(DD::Output);
     }
