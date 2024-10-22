@@ -1,4 +1,4 @@
-# avr-template
+# avr-pin
 
 A basic AVR rust pin implementation.
 
