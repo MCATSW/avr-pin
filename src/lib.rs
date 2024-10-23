@@ -1,7 +1,5 @@
 #![no_std]
 
-use core::panic;
-
 pub mod addresses;
 pub mod pid;
 
