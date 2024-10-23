@@ -24,33 +24,32 @@ pub enum DD {
 impl Pin {
     /// Creates a `Pin` based on an Arduino pin ID.
     ///
-    /// # Panics
-    ///
-    /// Panics when an invalid pid is supplied.
-    pub fn from_pid(pid: u8) -> Self {
+    /// If the pid is valid, `Some` containing a `Pin` is returned.
+    /// Otherwise, `None` is returned.
+    pub fn from_pid(pid: u8) -> Option<Self> {
         if pid < 8 {
-            Self {
+            Some(Self {
                 ddr: addresses::DDRD,
                 port: addresses::PORTD,
                 pin: addresses::PIND,
                 mask: 1 << pid,
-            }
+            })
         } else if pid < 14 {
-            Self {
+            Some(Self {
                 ddr: addresses::DDRB,
                 port: addresses::PORTB,
                 pin: addresses::PINB,
                 mask: 1 << (pid - 8),
-            }
+            })
         } else if pid < 20 {
-            Self {
+            Some(Self {
                 ddr: addresses::DDRC,
                 port: addresses::PORTC,
                 pin: addresses::PINC,
                 mask: 1 << (pid - 14),
-            }
+            })
         } else {
-            panic!();
+            None
         }
     }
     /// Sets the `Pin`'s DDR value
