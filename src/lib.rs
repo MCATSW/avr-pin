@@ -3,6 +3,7 @@
 use core::panic;
 
 pub mod addresses;
+pub mod pid;
 
 /// A structure containing I/O register
 /// pointers and a mask for a given `Pin`.
