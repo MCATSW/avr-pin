@@ -3,6 +3,9 @@ name = "avr-pin"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+atmega328p = []
+
 [dependencies]
 
 [profile.release]
